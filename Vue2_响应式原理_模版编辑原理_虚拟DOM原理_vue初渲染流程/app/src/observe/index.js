@@ -29,7 +29,7 @@ export function defineReactive(target,key,value){//闭包 属性劫持
     observe(value); // 对所有的对象都进行属性劫持; 深度属性劫持
     Object.defineProperty(target,key,{
         get(){//取值的时候 会执行get
-            console.log("用户取值 key",key)
+            //console.log("用户取值 key",key)
             return value
         },
         set(newValue){// 设置值 会执行set

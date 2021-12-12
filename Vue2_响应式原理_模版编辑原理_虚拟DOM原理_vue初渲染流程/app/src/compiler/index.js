@@ -45,7 +45,7 @@ function gen(node) {
                 lastIndex = index + match[0].length
             }
             if (lastIndex < text.length) {
-                tokens.push(JSON.stringify(text.slice(lastIndex)))
+                tokens.push(text.slice(lastIndex))
             }
             return `_v(${tokens.join('+')})`
         }
