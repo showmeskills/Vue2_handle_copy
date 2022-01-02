@@ -28,8 +28,16 @@ class ModuleCollection {
         //[]建立一个栈结构
         this.register([], options);
     }
+    getNamespace(path){//获取命名空间方法
+        let module = this.root;//根
+        return path.reduce((str,key)=>{ //[a,c,d]
+            module = module.getChild(key);
+            return str + (module.namespaced ? `${key}/` : '')
+        },"")
+    }
     register(path, rootModule) {
         let newModule = new Module(rootModule) //不用obj 用类是方便扩展
+        rootModule.newModule = newModule;
         if (this.root === null) {
             this.root = newModule
         } else {
