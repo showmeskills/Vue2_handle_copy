@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" class="form-control" id="title" placeholder="Enter title" oninput="updateText('title', event)" />
+    <h1 s-text="title"></h1>
+    <!-- <script>
+        let ipt = document.getElementById("ipt");
+        let txt = document.getElementById("text");
+        let data = {
+            iptVal: ipt.value,
+        }
+        Object.keys(data).forEach(dataKey=>{
+            let val = data[dataKey];
+            Object.defineProperty(data,dataKey,{
+                get(){
+                    return val;
+                },
+                set(newVal){
+                    val=newVal
+                    txt.innerHTML = newVal
+                }
+            })
+        })
+        ipt.oninput = function (event){
+            data.iptVal = event.target.value
+        }
+    </script> -->
+    <script src='/index.js'></script>
+</body>
+
+</html>
