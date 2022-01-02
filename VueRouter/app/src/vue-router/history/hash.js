@@ -17,12 +17,18 @@ class HashHistory extends Base{
          ensureSlash()
     }
     setupListener(){ //稍后需要调用此方法 监控hash值
-        window.addEventListener('hashchange',function(){
-            getHash()
+        window.addEventListener('hashchange',()=>{
+            //当hash值变化后需要更新url
+            this.transitionTo(getHash())
         })
     }
     getCurrentLocation(){
         return getHash();
+    }
+    push(location){
+        this.history.transitionTo(location,()=>{
+            window.location.hash = location
+       })
     }
 }
 

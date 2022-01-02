@@ -1,3 +1,6 @@
+import routerLink from "./components/router-link";
+import routerView from "./components/router-view";
+
 export let Vue;
 
 function install (_Vue){
@@ -16,6 +19,13 @@ function install (_Vue){
                 this._routerRoot = this; //根实例
                 this._router = this.$options.router;
                 this._router.init(this);//this 就整个应用 new Vue
+                //给更实例添加一个属性 _route就是当前的current对象; 作为响应式属性
+                Vue.util.defineReactive(this,'_route',this._router.history.current)
+                //改变的是current两个不是一个对象，内部的是current我们需要改变这个_route
+
+                //this._router 拿到根实例
+                //this._route 拿到current对象
+
             }else{
                 //有父组件就往父组件中寻找
                 //在所有组件上都增加一个_routerRoot指向根实例
@@ -31,35 +41,15 @@ function install (_Vue){
             return this._routerRoot && this._routerRoot._router;
         }
     })
-
-    Vue.component("router-link",{
-        props:{
-            to:{
-                type:String,
-                require:true,
-            },
-            tag:{
-                type:String,
-                default:"a"
-            }
-        },  
-        methods:{
-            handler(){
-                this.$router.push(this.to)
-            }
-        },
-        render(){
-            // this.$scopeSlots.default()
-            let tag = this.tag ;
-            return <tag onClick={this.handler}>{this.$slots.default}</tag>
+    // 定义成响应式
+    Object.defineProperty(Vue.prototype,"$route",{ //所有组件都有一个$route属性 对应的就是我们
+        get(){
+            return this._routerRoot && this._routerRoot._route;
         }
     })
+    Vue.component("router-link",routerLink)
 
-    Vue.component("router-view",{
-        render(){
-            return <div>空</div>
-        }
-    })
+    Vue.component("router-view",routerView)
 
 }
 export default install

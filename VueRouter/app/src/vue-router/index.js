@@ -7,6 +7,7 @@ class VueRouter{
     constructor(options){
         //用户传递的路由配置，我们可以对这个配置进行一个路由映射
         let routes = options.routes || [];
+        this.beforeEachHooks = [];
         //将routes 映射表{'/':Home,'/a':HomeA,'/b':HomeB,'/about':About}
         //方便后续的匹配,也可以添加新的方法
         this.mathcer = createMatcher(routes);
@@ -23,7 +24,10 @@ class VueRouter{
         return this.mathcer.match(location)
     }
     push(location){
-        this.history.transitionTo(location)
+       return this.history.push(location);
+    }
+    beforeEach(cb){
+        this.beforeEachHooks.push(cb);
     }
     init(app){
         let history = this.history;
@@ -32,6 +36,10 @@ class VueRouter{
         history.transitionTo(history.getCurrentLocation(),()=>{
             history.setupListener();// 监听路由的变化
         })
+        //每次路由切换的是欧都需要调用listen方法中的回调实现更新
+        history.listen((newRoute)=>{ //这个目的就是更新_route的值使它能够发生变化，数据变化会自动重新渲染
+            app._route = newRoute
+        });
     }
 }
 
@@ -44,4 +52,5 @@ class VueRouter{
 
 // 为什么要多发明一个install 方法，原因用户导出一个类，在类上写一个install方法，会优先执行install
 VueRouter.install = install
+
 export default VueRouter;

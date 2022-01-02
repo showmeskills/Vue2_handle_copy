@@ -53,11 +53,35 @@ const router = new VueRouter({
   routes
 })
 
-router.mathcer.addRoute([
-  {
-    path:"/xxx",
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  }
-])
+// router.mathcer.addRoute([
+//   {
+//     path:"/xxx",
+//     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+//   }
+// ])
+
+//导航守卫 当从一个路由切换到另一个路由的时候
+//组件要先离开 -> beforeRouteLeave
+//切换到新的组件里 -> beforeEach
+// A ? a=1 -> A? a=2 组件更新了 (beforeRouteUpdate)
+// 不是更新 就要走路由中配置的钩子 beforeEnter
+// 走组件的钩子 beforeRouteEnter
+// 确认切换完毕
+// 都走完了 afterEach
+// 通过数组把钩子 保存起来 [beforeEach,(afterEach),beforeEach]
+
+router.beforeEach((from,to,next)=>{
+  setTimeout(()=>{
+    console.log(1)
+    next()
+  },1000)
+})
+
+router.beforeEach((from,to,next)=>{
+  setTimeout(()=>{
+    console.log(2)
+    next()
+  },1000)
+})
 
 export default router
