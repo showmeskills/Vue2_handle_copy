@@ -1,0 +1,23 @@
+{
+  "name": "rollup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -cw"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "@rollup/plugin-auto-install": "^2.2.0",
+    "rollup": "^2.63.0"
+  },
+  "devDependencies": {
+    "node": "^17.3.1",
+    "rollup-pluginutils": "^2.8.2"
+  }
+}
